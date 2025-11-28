@@ -1,0 +1,71 @@
+graph TB
+    subgraph "External Users"
+        U1[Users]
+    end
+    
+    subgraph "Kubernetes Cluster"
+        subgraph "NodePort Services"
+            VS[Vote Service<br/>NodePort: 30000]
+            RS[Result Service<br/>NodePort: 30001]
+        end
+        
+        subgraph "ClusterIP Services"
+            REDIS[Redis Service<br/>ClusterIP: 6379]
+            DBS[DB Service<br/>ClusterIP: 5432]
+        end
+        
+        subgraph "Vote Deployment<br/>Replicas: 2"
+            VP1[Vote Pod 1<br/>denish952/voting-app-vote:v1]
+            VP2[Vote Pod 2<br/>denish952/voting-app-vote:v1]
+        end
+        
+        subgraph "Result Deployment<br/>Replicas: 2"
+            RP1[Result Pod 1<br/>denish952/voting-app-result:v1]
+            RP2[Result Pod 2<br/>denish952/voting-app-result:v1]
+        end
+        
+        subgraph "Worker Deployment<br/>Replicas: 1"
+            WP[Worker Pod<br/>denish952/voting-app-worker:v1]
+        end
+        
+        subgraph "Redis Deployment<br/>Replicas: 1"
+            REDISP[Redis Pod<br/>redis:latest]
+        end
+        
+        subgraph "DB Deployment<br/>Replicas: 1"
+            DBP[(PostgreSQL Pod<br/>postgres:15-alpine)]
+        end
+    end
+    
+    U1 -->|:30000| VS
+    U1 -->|:30001| RS
+    
+    VS --> VP1
+    VS --> VP2
+    RS --> RP1
+    RS --> RP2
+    
+    VP1 --> REDIS
+    VP2 --> REDIS
+    REDIS --> REDISP
+    
+    REDISP --> WP
+    WP --> DBS
+    DBS --> DBP
+    
+    DBP --> DBS
+    DBS --> RP1
+    DBS --> RP2
+    
+    style VS fill:#FF6B6B,stroke:#C92A2A,color:#fff
+    style RS fill:#FF6B6B,stroke:#C92A2A,color:#fff
+    style REDIS fill:#DC382D,stroke:#8B2319,color:#fff
+    style DBS fill:#336791,stroke:#1E3A5F,color:#fff
+    style VP1 fill:#4A90E2,stroke:#2E5C8A,color:#fff
+    style VP2 fill:#4A90E2,stroke:#2E5C8A,color:#fff
+    style RP1 fill:#4A90E2,stroke:#2E5C8A,color:#fff
+    style RP2 fill:#4A90E2,stroke:#2E5C8A,color:#fff
+    style WP fill:#F39C12,stroke:#B8770E,color:#fff
+    style REDISP fill:#DC382D,stroke:#8B2319,color:#fff
+    style DBP fill:#336791,stroke:#1E3A5F,color:#fff
+    style U1 fill:#27AE60,stroke:#1E8449,color:#fff

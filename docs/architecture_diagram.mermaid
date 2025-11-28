@@ -1,0 +1,37 @@
+graph TB
+    subgraph "User Interface"
+        U1[User - Vote]
+        U2[User - View Results]
+    end
+    
+    subgraph "Frontend Services"
+        V[Vote Service<br/>Python Flask<br/>Port: 5000/30000]
+        R[Result Service<br/>Python Flask<br/>Port: 5001/30001]
+    end
+    
+    subgraph "Message Queue"
+        RD[Redis<br/>In-Memory Cache<br/>Port: 6379]
+    end
+    
+    subgraph "Background Processing"
+        W[Worker Service<br/>Python<br/>Vote Processor]
+    end
+    
+    subgraph "Database"
+        DB[(PostgreSQL<br/>Persistent Storage<br/>Port: 5432)]
+    end
+    
+    U1 -->|HTTP Request| V
+    V -->|Store Vote| RD
+    RD -->|Read Votes| W
+    W -->|Store Results| DB
+    DB -->|Query Results| R
+    R -->|Display Results| U2
+    
+    style V fill:#4A90E2,stroke:#2E5C8A,color:#fff
+    style R fill:#4A90E2,stroke:#2E5C8A,color:#fff
+    style RD fill:#DC382D,stroke:#8B2319,color:#fff
+    style W fill:#F39C12,stroke:#B8770E,color:#fff
+    style DB fill:#336791,stroke:#1E3A5F,color:#fff
+    style U1 fill:#27AE60,stroke:#1E8449,color:#fff
+    style U2 fill:#27AE60,stroke:#1E8449,color:#fff

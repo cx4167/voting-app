@@ -1,0 +1,38 @@
+graph LR
+    subgraph "Docker Network"
+        subgraph "Vote Container"
+            VC[Vote App<br/>Python:3.9-slim<br/>Port: 5000→80]
+        end
+        
+        subgraph "Redis Container"
+            RC[Redis<br/>redis:latest<br/>Port: 6379]
+        end
+        
+        subgraph "Worker Container"
+            WC[Worker<br/>Python:3.9-slim<br/>Background Process]
+        end
+        
+        subgraph "DB Container"
+            DC[(PostgreSQL<br/>postgres:15-alpine<br/>Port: 5432)]
+        end
+        
+        subgraph "Result Container"
+            RES[Result App<br/>Python:3.9-slim<br/>Port: 5001→80]
+        end
+    end
+    
+    HOST[Host Machine<br/>localhost:5000<br/>localhost:5001]
+    
+    VC -->|votes| RC
+    RC -->|read| WC
+    WC -->|write| DC
+    DC -->|query| RES
+    HOST -.->|access| VC
+    HOST -.->|access| RES
+    
+    style VC fill:#4A90E2,stroke:#2E5C8A,color:#fff
+    style RC fill:#DC382D,stroke:#8B2319,color:#fff
+    style WC fill:#F39C12,stroke:#B8770E,color:#fff
+    style DC fill:#336791,stroke:#1E3A5F,color:#fff
+    style RES fill:#4A90E2,stroke:#2E5C8A,color:#fff
+    style HOST fill:#27AE60,stroke:#1E8449,color:#fff

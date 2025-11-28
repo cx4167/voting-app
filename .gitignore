@@ -1,0 +1,71 @@
+i# ---- Python ----
+# Byte-compiled / optimized
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtualenvs
+venv/
+env/
+.venv/
+ENV/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+pip-wheel-metadata/
+
+# Pipenv / poetry
+Pipfile.lock
+poetry.lock
+
+# Pytest / coverage
+.pytest_cache/
+coverage.xml
+htmlcov/
+
+# Type checkers / caches
+.mypy_cache/
+.pyre/
+.cache/
+
+# Logs
+*.log
+
+# SQLite / DB files
+*.sqlite3
+*.db
+
+# ---- Environment / secrets ----
+# local env files, API keys, credentials
+.env
+.env.* 
+
+# ---- Editor / OS files ----
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+desktop.ini
+*~
+
+# ---- Docker / container ----
+# local docker-compose overrides and secret certs
+docker-compose.override.yml
+*.pem
+*.key
+*.crt
+
+# If you create local build artifacts, ignore them:
+*.tar
+*.tgz
+
+# ---- Misc / tooling ----
+# backup/temporary files
+*.swp
+*.bak
+*.tmp
+*.:Zone.Identifier
