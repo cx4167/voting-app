@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: worker
-  namespace: voting-app
 spec:
   replicas: 1
   selector:
@@ -15,7 +14,7 @@ spec:
     spec:
       containers:
       - name: worker
-        image: denish952/voting-app-worker:v1
+        image: denish952/voting-app-worker:2
         imagePullPolicy: IfNotPresent
         env:
         - name: POSTGRES_PASSWORD
