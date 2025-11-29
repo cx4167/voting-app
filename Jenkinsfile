@@ -11,7 +11,6 @@ pipeline {
     environment {
         DOCKER_HUB_REPO = 'denish952'
         BUILD_NUM = "${BUILD_NUMBER}"
-        DOCKER_BUILDKIT = '1'
     }
     
     stages {
